@@ -1,6 +1,7 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
 <p>Welcome to the Template::Toolkit play area</p>
+<p><a href="">Run</a></p>
 <div class="core">
     <div class="tt">
         <h2>Template</h2>

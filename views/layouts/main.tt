@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="site.css">
     <link rel="stylesheet" href="site.css">
+    <script src="jquery-3.3.1.min.js"></script>
     <script src="codemirror/lib/codemirror.js"></script>
     <script src="codemirror/mode/xml/xml.js"></script>
     <script src="codemirror/addon/dialog/dialog.js"></script>
@@ -20,7 +21,7 @@
     <script src="codemirror/addon/edit/matchbrackets.js"></script>
     <script src="codemirror/addon/edit/matchtags.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        $(function() {
             var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('editor'),
             {
                 lineNumbers: true,
@@ -32,6 +33,10 @@
                 lineNumbers: true,
                 matchBrackets: true,
                 mode: "application/json",
+            });
+            $('.run').click(function() {
+                console.log(myCodeMirror.getValue());
+                console.log(variablesEditor.getValue());
             });
         });
     </script>

@@ -1,15 +1,19 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
 <p>Welcome to the Template::Toolkit play area</p>
-<p><a href="">Run</a></p>
+<p><a class="run" href="#">Run</a></p>
 <div class="core">
     <div class="tt">
         <h2>Template</h2>
-        <textarea id="editor"></textarea>
+        <textarea id="editor">
+        [%- TAGS [- -] -%]
+[% var1 %]
+        [-- TAGS [% %] --]
+        </textarea>
     </div>
     <div class="variables">
         <h2>Variables</h2>
-        <textarea id="variables"></textarea>
+        <textarea id="variables">{ "var1": "test" }</textarea>
     </div>
     <div class="results">
         <h2>Results</h2>

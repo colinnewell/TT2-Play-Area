@@ -16,8 +16,7 @@
 [% b || c | html %]
 [% a | html %]
 [% b | html %]
-        [-- TAGS [% %] --]
-        </textarea>
+        [-- TAGS [% %] --]</textarea>
     </div>
     <div class="variables">
         <h2>Variables</h2>

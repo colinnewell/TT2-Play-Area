@@ -1,7 +1,8 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
 <p>Welcome to the Template::Toolkit play area</p>
-<p><a class="run" href="#">Run</a></p>
+<p><a class="tt2" href="#">Run</a></p>
+<p><a class="alloy" href="#">Template::Alloy</a></p>
 <div class="core">
     <div class="tt">
         <h2>Template</h2>
@@ -12,10 +13,11 @@
 [% var1 | uri %]
 [% var1.json %]
 [% var1.json | html %]
-[% a || b | html %]
-[% b || c | html %]
-[% a | html %]
-[% b | html %]
+a||b   [% a || b | html %]
+(a||b) [% (a || b) | html %]
+b||c   [% b || c | html %]
+a      [% a | html %]
+b      [% b | html %]
         [-- TAGS [% %] --]</textarea>
     </div>
     <div class="variables">
@@ -28,7 +30,7 @@
 }</textarea>
     </div>
     <div class="results">
-        <h2>Results</h2>
+        <h2>Results TT2</h2>
         <pre id="results">
         </pre>
     </div>

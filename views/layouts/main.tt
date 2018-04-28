@@ -34,15 +34,14 @@
                 matchBrackets: true,
                 mode: "application/json",
             });
-            $('.run').click(function() {
-                console.log(myCodeMirror.getValue());
-                console.log(variablesEditor.getValue());
-                $.post('/tt2', { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
-                    function(data) {
-                        $('#results').text(data.result);
-                    }
-                );
-
+            ['tt2', 'alloy'].forEach(function(e) {
+                $('a.' + e).click(function() {
+                    $.post('/' + e, { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
+                        function(data) {
+                            $('#results').text(data.result);
+                        }
+                    );
+                });
             });
         });
     </script>

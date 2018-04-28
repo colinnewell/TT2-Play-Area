@@ -32,10 +32,19 @@ post '/tt2' => sub {
 };
 
 post '/alloy' => sub {
+    process_alloy({});
+};
+
+post '/alloy_html' => sub {
+    process_alloy({ AUTO_FILTER => 'html' });
+};
+
+sub process_alloy
+{
+    my $config = shift;
     my $tt   = body_parameters->{template};
     my $vars = decode_json(body_parameters->{vars});
 
-    my $config = {};
 
     # create Template object
     my $template = Template::Alloy->new($config);

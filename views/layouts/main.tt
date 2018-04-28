@@ -34,7 +34,7 @@
                 matchBrackets: true,
                 mode: "application/json",
             });
-            ['tt2', 'alloy'].forEach(function(e) {
+            ['tt2', 'alloy', 'alloy_html'].forEach(function(e) {
                 $('a.' + e).click(function() {
                     $.post('/' + e, { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
                         function(data) {
@@ -48,7 +48,7 @@
 
   </head>
   <body>
-    [% content %]
+    [% content | none %]
   </body>
 </html>
 

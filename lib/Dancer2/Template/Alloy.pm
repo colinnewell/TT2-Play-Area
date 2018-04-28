@@ -16,10 +16,8 @@ sub _build_engine {
     my $charset   = $self->charset;
     my %tt_config = (
         ANYCASE  => 1,
-        ABSOLUTE => 1,
-
-        #RELATIVE => 1,
-        #AUTO_FILTER => 'html',
+        RELATIVE => 1,
+        AUTO_FILTER => 'html',
         length($charset) ? ( ENCODING => $charset ) : (),
         %{ $self->config },
     );

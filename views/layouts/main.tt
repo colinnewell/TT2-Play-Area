@@ -3,6 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title>[% title %]</title>
+    <link rel="stylesheet" href="codemirror/addon/dialog/dialog.css">
+    <link rel="stylesheet" href="codemirror/addon/search/matchesonscrollbar.css">
+    <link rel="stylesheet" href="site.css">
+    <script src="codemirror/lib/codemirror.js"></script>
+    <script src="codemirror/mode/xml/xml.js"></script>
+    <script src="codemirror/addon/dialog/dialog.js"></script>
+    <script src="codemirror/addon/search/searchcursor.js"></script>
+    <script src="codemirror/addon/search/search.js"></script>
+    <script src="codemirror/addon/scroll/annotatescrollbar.js"></script>
+    <script src="codemirror/addon/search/matchesonscrollbar.js"></script>
+    <script src="codemirror/addon/search/jump-to-line.js"></script>
+    <script src="codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="codemirror/addon/edit/matchtags.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('editor'), 
+            { 
+                lineNumbers: true,
+                mode: "htmlmixed",
+            });
+            var variablesEditor = CodeMirror.fromTextArea(document.getElementById('variables'), 
+            { 
+                lineNumbers: true,
+                mode: "javascript",
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="site.css">
   </head>
   <body>
     [% content %]

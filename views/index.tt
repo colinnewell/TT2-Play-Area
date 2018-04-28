@@ -1,3 +1,18 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
 <p>Welcome to the Template::Toolkit play area</p>
+<div class="core">
+    <div class="tt">
+        <h2>Template</h2>
+        <textarea id="editor"></textarea>
+    </div>
+    <div class="variables">
+        <h2>Variables</h2>
+        <textarea id="variables"></textarea>
+    </div>
+    <div class="results">
+        <h2>Results</h2>
+        <div id="results">
+        </div>
+    </div>
+</div>

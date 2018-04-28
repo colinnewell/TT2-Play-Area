@@ -1,3 +1,4 @@
+requires "Cpanel::JSON::XS"                   => "0";
 requires "Dancer2"                            => "0";
 requires "Dancer2::Core::Types"               => "0";
 requires "Dancer2::Template::TemplateToolkit" => "0";

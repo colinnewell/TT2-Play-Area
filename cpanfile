@@ -4,6 +4,7 @@ requires "Dancer2::Template::TemplateToolkit" => "0";
 requires "Moo" => "0";
 requires "Plack::Builder" => "0";
 requires "Scalar::Util" => "0";
+requires "Starman" => "0";
 requires "Template::Alloy" => "0";
 requires "strict" => "0";
 requires "strictures" => "2";

@@ -1,0 +1,11 @@
+appname: "TT2::Play::Area"
+
+layout: "main"
+
+charset: "UTF-8"
+
+template: "alloy"
+engines:
+  template:
+    AUTO_FILTER: html
+

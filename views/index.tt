@@ -7,17 +7,30 @@
         <h2>Template</h2>
         <textarea id="editor">
         [%- TAGS [- -] -%]
+[% USE JSON %]
 [% var1 %]
+[% var1 | uri %]
+[% var1.json %]
+[% var1.json | html %]
+[% a || b | html %]
+[% b || c | html %]
+[% a | html %]
+[% b | html %]
         [-- TAGS [% %] --]
         </textarea>
     </div>
     <div class="variables">
         <h2>Variables</h2>
-        <textarea id="variables">{ "var1": "test" }</textarea>
+        <textarea id="variables">{
+    "a": "<a>",
+    "b": "",
+    "c": "<c>",
+    "var1": "test"
+}</textarea>
     </div>
     <div class="results">
         <h2>Results</h2>
-        <div id="results">
-        </div>
+        <pre id="results">
+        </pre>
     </div>
 </div>

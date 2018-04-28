@@ -37,6 +37,12 @@
             $('.run').click(function() {
                 console.log(myCodeMirror.getValue());
                 console.log(variablesEditor.getValue());
+                $.post('/tt2', { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
+                    function(data) {
+                        $('#results').text(data.result);
+                    }
+                );
+
             });
         });
     </script>

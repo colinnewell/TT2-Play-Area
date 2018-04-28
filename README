@@ -1,0 +1,21 @@
+NAME
+
+    TT2::Play::Area - Simple site to allow playing with TT2 syntax and
+    built in plugins.
+
+VERSION
+
+    version 0.001
+
+AUTHOR
+
+    Colin Newell <colin.newell@gmail.com>
+
+COPYRIGHT AND LICENSE
+
+    This software is Copyright (c) 2018 by Colin Newell.
+
+    This is free software, licensed under:
+
+      The MIT (X11) License
+

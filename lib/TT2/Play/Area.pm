@@ -54,11 +54,13 @@ post '/tt2' => sub {
     # create Template object
     my $template = Template->new($config);
     my $output;
-    $template->process( \$tt, $vars, \$output )
-      || die $template->error();
+
+    if ( ! $template->process( \$tt, $vars, \$output ) ){
+        $output = $template->error();
+    }
 
     send_as JSON => {
-        result   => $output,
+        result => $output,
     };
 };
 

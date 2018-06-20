@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="codemirror/addon/search/matchesonscrollbar.css">
     <link rel="stylesheet" href="codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="site.css">
-    <link rel="stylesheet" href="site.css">
     <script src="jquery-3.3.1.min.js"></script>
     <script src="codemirror/lib/codemirror.js"></script>
     <script src="codemirror/mode/xml/xml.js"></script>

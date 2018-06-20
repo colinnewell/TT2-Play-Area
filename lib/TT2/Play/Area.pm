@@ -47,7 +47,15 @@ get '/' => sub {
 
 post '/tt2' => sub {
     my $tt   = body_parameters->{template};
-    my $vars = decode_json(body_parameters->{vars});
+    my $vars;
+    eval {
+        $vars = decode_json(body_parameters->{vars});
+    };
+    if($@) {
+        send_as JSON => {
+            result => 'Failed to parse variables: ' . $@,
+        };
+    }
 
     my $config = {};
 
@@ -56,7 +64,7 @@ post '/tt2' => sub {
     my $output;
 
     if ( ! $template->process( \$tt, $vars, \$output ) ){
-        $output = $template->error();
+        $output = 'Template error: ' . $template->error()->as_string;
     }
 
     send_as JSON => {

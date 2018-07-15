@@ -2,20 +2,12 @@ package TT2::Play::Area;
 
 # ABSTRACT: Simple site to allow playing with TT2 syntax and built in plugins.
 
-=head2 DESCRIPTION
+=head1 DESCRIPTION
 
 This is a mini site for testing L<Template> Toolkit 2 and L<Template::Alloy>
 rendering in a similar way to sites like jsFiddle.  It provides a pane for
 editing the template, and a pane for providing the variables to pass it (in
 JSON).
-
-The site is automatically built into a docker container on quay.io so if
-you simply want to spin it up the quickest way is to,
-
-    docker run -d -p5000:5000 quay.io/colinnewell/tt2-play-area:latest
-
-This will expose it on port 5000 on localhost, so you should be able to
-browse to L<http://localhost:5000>.
 
 Currently supported 'engines' are,
 
@@ -30,6 +22,26 @@ Currently supported 'engines' are,
 =back
 
 On the front end jQuery and CodeMirror are used to provide the UI.
+
+=head1 RUNNING 
+
+The site is automatically built into a docker container on quay.io so if
+you simply want to spin it up the quickest way is to,
+
+    docker run -d -p5000:5000 quay.io/colinnewell/tt2-play-area:latest
+
+This will expose it on port 5000 on localhost, so you should be able to
+browse to L<http://localhost:5000>.
+
+Alternatively, if you've installed the module from CPAN then you can run it
+using plackup like this,
+
+    plackup `which tt2-play-area.psgi`
+
+Or if you checkout the github repo like this,
+
+    cpanm --installdeps .
+    plackup -I lib bin/tt2-play-area.psgi
 
 =cut
 

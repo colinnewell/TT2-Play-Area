@@ -1,9 +1,14 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
 <p>Welcome to the Template::Toolkit play area</p>
+<p>
+<form id="engines">
+<label><input type="checkbox" name="engine" value="tt2" checked>TT2</label>
+<label><input type="checkbox" name="engine" value="alloy">Template::Alloy</label>
+<label><input type="checkbox" name="engine" value="alloy_html">Template::Alloy | html</label>
+</form>
+</p>
 <p><a class="tt2" href="#">Run</a></p>
-<p><a class="alloy" href="#">Template::Alloy</a></p>
-<p><a class="alloy_html" href="#">Template::Alloy | html</a></p>
 <div class="core">
     <div class="tt">
         <h2>Template</h2>
@@ -31,8 +36,8 @@ b      [% b | html %]
 }</textarea>
     </div>
     <div class="results">
-        <h2>Results TT2</h2>
-        <pre id="results">
-        </pre>
+        <h2>Results</h2>
+        <div id="results">
+        </div>
     </div>
 </div>

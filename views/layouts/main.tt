@@ -33,14 +33,17 @@
                 matchBrackets: true,
                 mode: "application/json",
             });
-            ['tt2', 'alloy', 'alloy_html'].forEach(function(e) {
-                $('a.' + e).click(function() {
-                    $.post('/' + e, { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
-                        function(data) {
-                            $('#results').text(data.result);
-                        }
-                    );
-                });
+            $('a.tt2').click(function() {
+                $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
+                    function(data) {
+                        console.log(data);
+                        var $output_div = $('<div>');
+                        $.each(data.result, function(key, value) {
+                            $output_div.append($('<h2>').text(key), $('<pre>').text(value));
+                        });
+                        $('#results').html($output_div);
+                    }
+                );
             });
         });
     </script>

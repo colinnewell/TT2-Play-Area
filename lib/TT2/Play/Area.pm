@@ -58,56 +58,58 @@ get '/' => sub {
 };
 
 post '/tt2' => sub {
-    my $tt   = body_parameters->{template};
+    my $tt = body_parameters->{template};
     my $vars;
-    eval {
-        $vars = decode_json(body_parameters->{vars});
-    };
-    if($@) {
-        send_as JSON => {
-            result => 'Failed to parse variables: ' . $@,
-        };
+    my @engines = query_parameters->get_all('engine');
+    eval { $vars = decode_json( body_parameters->{vars} ); };
+    if ($@) {
+        send_as JSON => { result => 'Failed to parse variables: ' . $@, };
     }
 
     my $config = {};
 
-    # create Template object
-    my $template = Template->new($config);
-    my $output;
+    my %engine_output;
+    my %engine_name = (
+        tt2        => 'TT2',
+        alloy      => 'Template::Alloy',
+        alloy_html => 'Template::Alloy + AUTO_FILTER = html',
+    );
+    for my $engine (@engines) {
+        my $output;
+        if ( $engine eq 'tt2' ) {
 
-    if ( ! $template->process( \$tt, $vars, \$output ) ){
-        $output = 'Template error: ' . $template->error()->as_string;
+            # create Template object
+            my $template = Template->new($config);
+
+            if ( !$template->process( \$tt, $vars, \$output ) ) {
+                $output = 'Template error: ' . $template->error()->as_string;
+            }
+        }
+        elsif ( $engine eq 'alloy' ) {
+            $output = process_alloy( {} );
+        }
+        elsif ( $engine eq 'alloy_html' ) {
+            $output = process_alloy( { AUTO_FILTER => 'html' } );
+        }
+        $engine_output{ $engine_name{$engine} } = $output;
     }
 
-    send_as JSON => {
-        result => $output,
-    };
+    send_as JSON => { result => \%engine_output, };
 };
 
-post '/alloy' => sub {
-    process_alloy({});
-};
-
-post '/alloy_html' => sub {
-    process_alloy({ AUTO_FILTER => 'html' });
-};
-
-sub process_alloy
-{
+sub process_alloy {
     my $config = shift;
-    my $tt   = body_parameters->{template};
-    my $vars = decode_json(body_parameters->{vars});
-
+    my $tt     = body_parameters->{template};
+    my $vars   = decode_json( body_parameters->{vars} );
 
     # create Template object
     my $template = Template::Alloy->new($config);
     my $output;
-    $template->process( \$tt, $vars, \$output )
-      || die $template->error();
+    unless ( $template->process( \$tt, $vars, \$output ) ) {
+        $output = 'Template error:' . $template->error()->as_string;
+    }
 
-    send_as JSON => {
-        result   => $output,
-    };
-};
+    return $output;
+}
 
 1;

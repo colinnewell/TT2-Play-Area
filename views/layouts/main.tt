@@ -36,7 +36,6 @@
             $('a.tt2').click(function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
                     function(data) {
-                        console.log(data);
                         var $output_div = $('<div>');
                         $.each(data.result, function(key, value) {
                             $output_div.append($('<h2>').text(key), $('<pre>').text(value));

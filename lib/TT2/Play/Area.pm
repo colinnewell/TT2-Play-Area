@@ -63,7 +63,7 @@ post '/tt2' => sub {
     my @engines = query_parameters->get_all('engine');
     eval { $vars = decode_json( body_parameters->{vars} ); };
     if ($@) {
-        send_as JSON => { result => 'Failed to parse variables: ' . $@, };
+        send_as JSON => { result => { 'Error' => 'Failed to parse variables: ' . $@, } };
     }
 
     my $config = {};

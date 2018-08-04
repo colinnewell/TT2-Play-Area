@@ -60,8 +60,20 @@ my $example_dir = path( dist_dir('TT2-Play-Area') )->child('examples');
 get '/' => sub {
     my $template  = $example_dir->child('index.tt');
     my $vars_file = $example_dir->child('index.vars');
+    my @files     = $example_dir->children(qr/\.settings/);
+    my @examples;
+    for my $file (@files) {
+        my ( $name, $settings ) = load_settings($file);
+        unless ( $name eq 'index' ) {
+            push @examples, { name => $name, title => $settings->{title} };
+        }
+    }
     template 'index',
-      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
+      {
+        examples  => \@examples,
+        tt        => $template->slurp_utf8,
+        variables => $vars_file->slurp_utf8
+      };
 };
 
 post '/tt2' => sub {
@@ -132,6 +144,13 @@ sub process_alloy {
     }
 
     return $output;
+}
+
+sub load_settings {
+    my $file   = shift;
+    my ($name) = $file->stringify =~ /(\w+)\.settings$/;
+    my $data   = decode_json( $file->slurp_utf8 );
+    return ( $name, $data );
 }
 
 1;

@@ -1,13 +1,21 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
 <p>Welcome to the Template::Toolkit play area</p>
-<p>
+[% IF examples %]
+<div>
+<h2>Examples</h2>
+<ul>
+[% FOR example IN examples %]
+<li><a href="/example/[% example.name %]">[% example.title %]</a></li>
+[% END %]
+</ul>
+</div>
+[% END %]
 <form id="engines">
 <label><input type="checkbox" name="engine" value="tt2" checked>TT2</label>
 <label><input type="checkbox" name="engine" value="alloy">Template::Alloy</label>
 <label><input type="checkbox" name="engine" value="alloy_html">Template::Alloy | html</label>
 </form>
-</p>
 <p><a class="tt2" href="#">Run</a></p>
 <div class="core">
     <div class="tt">

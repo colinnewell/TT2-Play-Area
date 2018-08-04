@@ -48,13 +48,20 @@ Or if you checkout the github repo like this,
 use strictures 2;
 use Cpanel::JSON::XS;
 use Dancer2;
+use File::ShareDir 'dist_dir';
+use Path::Tiny;
 use Template;
 use Template::Alloy;
 
 our $VERSION = '0.001';
 
+my $example_dir = path( dist_dir('TT2-Play-Area') )->child('examples');
+
 get '/' => sub {
-    template 'index';
+    my $template  = $example_dir->child('index.tt');
+    my $vars_file = $example_dir->child('index.vars');
+    template 'index',
+      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
 };
 
 post '/tt2' => sub {
@@ -63,7 +70,8 @@ post '/tt2' => sub {
     my @engines = query_parameters->get_all('engine');
     eval { $vars = decode_json( body_parameters->{vars} ); };
     if ($@) {
-        send_as JSON => { result => { 'Error' => 'Failed to parse variables: ' . $@, } };
+        send_as JSON =>
+          { result => { 'Error' => 'Failed to parse variables: ' . $@, } };
     }
 
     my $config = {};
@@ -95,6 +103,20 @@ post '/tt2' => sub {
     }
 
     send_as JSON => { result => \%engine_output, };
+};
+
+get '/example/:name' => sub {
+    my $name = route_parameters->get('name');
+    return status 404 unless $name =~ /^[-\w]+$/;
+
+    my $template  = $example_dir->child( $name . '.tt' );
+    my $vars_file = $example_dir->child( $name . '.vars' );
+    my $settings  = $example_dir->child( $name . '.settings' );
+    unless ( $vars_file->exists && $template->exists ) {
+        return status 404;
+    }
+    template 'index',
+      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
 };
 
 sub process_alloy {

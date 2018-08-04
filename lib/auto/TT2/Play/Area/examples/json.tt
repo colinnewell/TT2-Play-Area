@@ -1,0 +1,20 @@
+[% USE JSON %]
+<p>
+Embedding javascript/json in HTML for browsers has one sting in it's tail.
+</p>
+
+<script language="javascript">
+var some_string = "[% some_string %]";
+</script>
+
+<p>
+The JSON plugin allows you to embed variables into javascript easily enough
+so that things don't get garbled.
+</p>
+
+<script language="javascript">
+var some_string = "[% some_string.json %]";
+var some_string = [% some_string.json %];
+var malicious = [% malicious.json %];
+</script>
+

@@ -14,6 +14,12 @@ subtest 'Main page' => sub {
     ok $res->is_success;
 };
 
+subtest 'Example' => sub {
+    ok my $res = $test->request( GET '/example/json' );
+    like $res->decoded_content, qr'JSON plugin';
+    ok $res->is_success;
+};
+
 subtest '404' => sub {
     ok my $res = $test->request( GET '/404' );
     ok !$res->is_success;

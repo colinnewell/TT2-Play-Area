@@ -127,8 +127,13 @@ get '/example/:name' => sub {
     unless ( $vars_file->exists && $template->exists ) {
         return status 404;
     }
-    template 'index',
-      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
+    my $tt_vars = { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
+    if($settings->exists) {
+        my ($name, $data) = load_settings($settings);
+        $tt_vars->{example_data} = $data;
+        $tt_vars->{example_name} = $name;
+    }
+    template 'index', $tt_vars;
 };
 
 sub process_alloy {

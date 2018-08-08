@@ -1,8 +1,4 @@
 [% USE JSON %]
-<p>
-Embedding javascript/json in HTML for browsers has one sting in it's tail.
-</p>
-
 <script language="javascript">
 var some_string = "[% some_string %]";
 </script>

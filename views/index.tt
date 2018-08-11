@@ -12,7 +12,7 @@
 </ul>
 </div>
 [% END %]
-<form id="engines">
+<form id="engines" method="post">
 <ul>
 [% FOR engine IN engine_list.keys.sort %]
 <li>

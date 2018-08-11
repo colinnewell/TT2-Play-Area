@@ -9,6 +9,8 @@ use Plack::Builder;
 use TT2::Play::Area;
 
 builder {
+    enable 'Session';
+    enable 'CSRFBlock';
     TT2::Play::Area->to_app;
 }
 

@@ -1,6 +1,7 @@
 [% title = 'TT2 Play Area' %]
 <h1>TT2 Play Area</h1>
-<p>Welcome to the Template::Toolkit play area</p>
+
+<p>[% IF example_data.blurb %][% example_data.blurb %][% ELSE %]Welcome to the Template::Toolkit play area[% END %]</p>
 [% IF examples %]
 <div>
 <h2>Examples</h2>
@@ -20,9 +21,6 @@
 [% END %]
 </form>
 <p><a class="tt2" href="#">Run</a></p>
-[% IF example_data.blurb %]
-<p>[% example_data.blurb %]</p>
-[% END %]
 <div class="core">
     <div class="tt">
         <h2>Template</h2>

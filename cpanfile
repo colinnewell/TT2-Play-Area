@@ -1,4 +1,5 @@
 requires "Cpanel::JSON::XS"                   => "0";
+requires "CryptX"                             => "0";
 requires "Dancer2"                            => "0";
 requires "Dancer2::Core::Types"               => "0";
 requires "Dancer2::Template::TemplateToolkit" => "0";
@@ -7,6 +8,7 @@ requires "Path::Tiny"                         => "0";
 requires "Plack::Builder"                     => "0";
 requires "Scalar::Util"                       => "0";
 requires "Starman"                            => "0";
+requires "String::Compare::ConstantTime"      => "0";
 requires "Template::Alloy"                    => "0";
 requires "Template"                           => "0";
 requires "Template::Plugin::JSON"             => "0";

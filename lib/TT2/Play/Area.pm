@@ -47,9 +47,12 @@ Or if you checkout the github repo like this,
 
 use strictures 2;
 use Cpanel::JSON::XS;
+use Crypt::Mac::HMAC 'hmac_b64u';
+use Crypt::Misc qw/encode_b64u decode_b64u/;
 use Dancer2;
 use File::ShareDir 'dist_dir';
 use Path::Tiny;
+use String::Compare::ConstantTime 'equals';
 use Template;
 use Template::Alloy;
 
@@ -76,11 +79,18 @@ get '/' => sub {
     }
     template 'index',
       {
+        csrf_token  => gen_csrf_token(),
         engine_list => engine_list_for_ui( selected => ['tt2'] ),
-        examples => [ sort { lc $a->{title} cmp lc $b->{title} } @examples ],
-        tt        => $template->slurp_utf8,
-        variables => $vars_file->slurp_utf8,
+        examples    => [ sort { lc $a->{title} cmp lc $b->{title} } @examples ],
+        tt          => $template->slurp_utf8,
+        variables   => $vars_file->slurp_utf8,
       };
+};
+
+get '/rand' => sub {
+    return request->env->{KEY};
+
+    #return $key;
 };
 
 sub engine_list_for_ui {
@@ -139,8 +149,11 @@ get '/example/:name' => sub {
         return status 404;
     }
     my $selected = ['tt2'];
-    my $tt_vars =
-      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
+    my $tt_vars  = {
+        csrf_token => gen_csrf_token(),
+        tt         => $template->slurp_utf8,
+        variables  => $vars_file->slurp_utf8
+    };
     if ( $settings->exists ) {
         my ( $name, $data ) = load_settings($settings);
         $tt_vars->{example_data} = $data;
@@ -171,6 +184,25 @@ sub load_settings {
     my ($name) = $file->stringify =~ /(\w+)\.settings$/;
     my $data   = decode_json( $file->slurp_utf8 );
     return ( $name, $data );
+}
+
+sub gen_csrf_token {
+    my $val = '0' x 32;
+    die 'Unable to call getrandom' unless syscall 318, $val, 32, 0 == 32;
+    return _create_csrf_token($val);
+}
+
+sub check_csrf_token {
+    my $token = shift;
+    my ($value) = split /:/, $token;
+    my $expected = _create_csrf_token( decode_b64u($value) );
+    return equals( $expected, $token );
+}
+
+sub _create_csrf_token {
+    my $val = shift;
+    return encode_b64u($val) . ':'
+      . hmac_b64u( 'SHA256', request->env->{KEY}, $val );
 }
 
 1;

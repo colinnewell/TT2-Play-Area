@@ -77,9 +77,9 @@ get '/' => sub {
     template 'index',
       {
         engine_list => engine_list_for_ui( selected => ['tt2'] ),
-        examples    => \@examples,
-        tt          => $template->slurp_utf8,
-        variables   => $vars_file->slurp_utf8,
+        examples => [ sort { lc $a->{title} cmp lc $b->{title} } @examples ],
+        tt        => $template->slurp_utf8,
+        variables => $vars_file->slurp_utf8,
       };
 };
 

@@ -12,9 +12,12 @@
 </div>
 [% END %]
 <form id="engines">
-<label><input type="checkbox" name="engine" value="tt2" checked>TT2</label>
-<label><input type="checkbox" name="engine" value="alloy">Template::Alloy</label>
-<label><input type="checkbox" name="engine" value="alloy_html">Template::Alloy | html</label>
+<ul>
+[% FOR engine IN engine_list.keys.sort %]
+<li>
+<label><input type="checkbox" name="engine" value="[% engine %]" [% IF engine_list.$engine.selected %]checked[% END %]>[% engine_list.$engine.name %]</label>
+</li>
+[% END %]
 </form>
 <p><a class="tt2" href="#">Run</a></p>
 [% IF example_data.blurb %]

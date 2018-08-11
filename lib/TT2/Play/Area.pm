@@ -57,6 +57,12 @@ our $VERSION = '0.001';
 
 my $example_dir = path( dist_dir('TT2-Play-Area') )->child('examples');
 
+my %engines = (
+    tt2        => 'TT2',
+    alloy      => 'Template::Alloy',
+    alloy_html => 'Template::Alloy + AUTO_FILTER = html',
+);
+
 get '/' => sub {
     my $template  = $example_dir->child('index.tt');
     my $vars_file = $example_dir->child('index.vars');
@@ -70,11 +76,21 @@ get '/' => sub {
     }
     template 'index',
       {
-        examples  => \@examples,
-        tt        => $template->slurp_utf8,
-        variables => $vars_file->slurp_utf8
+        engine_list => engine_list_for_ui( selected => ['tt2'] ),
+        examples    => \@examples,
+        tt          => $template->slurp_utf8,
+        variables   => $vars_file->slurp_utf8,
       };
 };
+
+sub engine_list_for_ui {
+    my %args = @_;
+    my %engine_list;
+    %engine_list =
+      map { $_ => { name => $engines{$_}, selected => 0 } } keys %engines;
+    $engine_list{$_}{selected} = 1 for @{ $args{selected} };
+    return \%engine_list;
+}
 
 post '/tt2' => sub {
     my $tt = body_parameters->{template};
@@ -89,11 +105,6 @@ post '/tt2' => sub {
     my $config = {};
 
     my %engine_output;
-    my %engine_name = (
-        tt2        => 'TT2',
-        alloy      => 'Template::Alloy',
-        alloy_html => 'Template::Alloy + AUTO_FILTER = html',
-    );
     for my $engine (@engines) {
         my $output;
         if ( $engine eq 'tt2' ) {
@@ -111,7 +122,7 @@ post '/tt2' => sub {
         elsif ( $engine eq 'alloy_html' ) {
             $output = process_alloy( { AUTO_FILTER => 'html' } );
         }
-        $engine_output{ $engine_name{$engine} } = $output;
+        $engine_output{ $engines{$engine} } = $output;
     }
 
     send_as JSON => { result => \%engine_output, };
@@ -127,12 +138,16 @@ get '/example/:name' => sub {
     unless ( $vars_file->exists && $template->exists ) {
         return status 404;
     }
-    my $tt_vars = { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
-    if($settings->exists) {
-        my ($name, $data) = load_settings($settings);
+    my $selected = ['tt2'];
+    my $tt_vars =
+      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
+    if ( $settings->exists ) {
+        my ( $name, $data ) = load_settings($settings);
         $tt_vars->{example_data} = $data;
         $tt_vars->{example_name} = $name;
+        $selected = $data->{engines} if exists $data->{engines};
     }
+    $tt_vars->{engine_list} = engine_list_for_ui( selected => $selected );
     template 'index', $tt_vars;
 };
 

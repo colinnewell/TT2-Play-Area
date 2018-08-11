@@ -44,6 +44,18 @@
                     }
                 );
             });
+
+            $('a.view').click(function() {
+                $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
+                    function(data) {
+                        var $output_div = $('<div>');
+                        $.each(data.result, function(key, value) {
+                            $output_div.append($('<h2>').text(key), $('<div>').html(value));
+                        });
+                        $('#results').html($output_div);
+                    }
+                );
+            });
         });
     </script>
   </head>

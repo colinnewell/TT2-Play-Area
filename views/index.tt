@@ -20,7 +20,10 @@
 </li>
 [% END %]
 </form>
-<p><a class="tt2" href="#">Run</a></p>
+<p>
+<a class="tt2" href="#">Run</a>
+<a class="view" href="#">View</a>
+</p>
 <div class="core">
     <div class="tt">
         <h2>Template</h2>

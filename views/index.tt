@@ -14,21 +14,16 @@
           </div>
         </div>
     </div>
+    <a class="tt2" href="#">Run</a>
+    <a class="view" href="#">View</a>
+    <form id="engines" method="post">
+    [% FOR engine IN engine_list.keys.sort %]
+        <label>[% engine_list.$engine.name %]<input type="checkbox" name="engine" value="[% engine %]" [% IF engine_list.$engine.selected %]checked[% END %]></label>
     [% END %]
+    </form>
+[% END %]
 </div>
 <p>[% IF example_data.blurb %][% example_data.blurb %][% ELSE %]Welcome to the Template::Toolkit play area[% END %]</p>
-<form id="engines" method="post">
-<ul>
-[% FOR engine IN engine_list.keys.sort %]
-<li>
-<label><input type="checkbox" name="engine" value="[% engine %]" [% IF engine_list.$engine.selected %]checked[% END %]>[% engine_list.$engine.name %]</label>
-</li>
-[% END %]
-</form>
-<p>
-<a class="tt2" href="#">Run</a>
-<a class="view" href="#">View</a>
-</p>
 <div class="core">
     <div class="tt">
         <h2>Template</h2>

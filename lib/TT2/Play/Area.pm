@@ -66,22 +66,26 @@ my %engines = (
 get '/' => sub {
     my $template  = $example_dir->child('index.tt');
     my $vars_file = $example_dir->child('index.vars');
-    my @files     = $example_dir->children(qr/\.settings/);
+    template 'index',
+      {
+        engine_list => engine_list_for_ui( selected => ['tt2'] ),
+        examples    => load_examples(),
+        tt          => $template->slurp_utf8,
+        variables   => $vars_file->slurp_utf8,
+      };
+};
+
+sub load_examples {
     my @examples;
+    my @files     = $example_dir->children(qr/\.settings/);
     for my $file (@files) {
         my ( $name, $settings ) = load_settings($file);
         unless ( $name eq 'index' ) {
             push @examples, { name => $name, title => $settings->{title} };
         }
     }
-    template 'index',
-      {
-        engine_list => engine_list_for_ui( selected => ['tt2'] ),
-        examples => [ sort { lc $a->{title} cmp lc $b->{title} } @examples ],
-        tt        => $template->slurp_utf8,
-        variables => $vars_file->slurp_utf8,
-      };
-};
+    return [ sort { lc $a->{title} cmp lc $b->{title} } @examples ];
+}
 
 sub engine_list_for_ui {
     my %args = @_;
@@ -139,8 +143,11 @@ get '/example/:name' => sub {
         return status 404;
     }
     my $selected = ['tt2'];
-    my $tt_vars =
-      { tt => $template->slurp_utf8, variables => $vars_file->slurp_utf8 };
+    my $tt_vars  = {
+        examples  => load_examples(),
+        tt        => $template->slurp_utf8,
+        variables => $vars_file->slurp_utf8,
+    };
     if ( $settings->exists ) {
         my ( $name, $data ) = load_settings($settings);
         $tt_vars->{example_data} = $data;

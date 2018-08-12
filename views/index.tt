@@ -1,17 +1,22 @@
 [% title = 'TT2 Play Area' %]
-<h1><a href="/">TT2 Play Area</a></h1>
-
-<p>[% IF example_data.blurb %][% example_data.blurb %][% ELSE %]Welcome to the Template::Toolkit play area[% END %]</p>
-[% IF examples %]
-<div>
-<h2>Examples</h2>
-<ul>
-[% FOR example IN examples %]
-<li><a href="/example/[% example.name %]">[% example.title %]</a></li>
-[% END %]
-</ul>
+<div class="navbar">
+    <a href="/">TT2 Play Area</a>
+    [% IF examples %]
+    <div class="dropdown">
+        <button class="dropbtn">Examples</button>
+        <div class="dropdown-content">
+          <div class="row">
+            <div class="column">
+            [% FOR example IN examples %]
+                <a href="/example/[% example.name %]">[% example.title %]</a>
+            [% END %]
+            </div>
+          </div>
+        </div>
+    </div>
+    [% END %]
 </div>
-[% END %]
+<p>[% IF example_data.blurb %][% example_data.blurb %][% ELSE %]Welcome to the Template::Toolkit play area[% END %]</p>
 <form id="engines" method="post">
 <ul>
 [% FOR engine IN engine_list.keys.sort %]

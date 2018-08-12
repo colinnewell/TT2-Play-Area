@@ -5,4 +5,4 @@ WORKDIR /opt/play-area
 RUN cpanm --installdeps .
 COPY . /opt/play-area
 
-CMD starman -I /opt/play-area/lib/ /opt/play-area/bin/tt2-play-area.psgi
+CMD starman --preload-app -I /opt/play-area/lib/ /opt/play-area/bin/tt2-play-area.psgi

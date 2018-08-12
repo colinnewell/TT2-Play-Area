@@ -8,8 +8,9 @@ use warnings;
 use Plack::Builder;
 use TT2::Play::Area;
 
-# FIXME: need to replace the secret key on load up.
 builder {
+    enable 'Session';
+    enable 'CSRFBlock';
     TT2::Play::Area->to_app;
 }
 

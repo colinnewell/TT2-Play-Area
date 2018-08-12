@@ -1,4 +1,9 @@
 [% USE JSON %]
+<style>
+script {
+    display: block;
+}
+</style>
 <script language="javascript">
 var some_string = "[% some_string %]";
 </script>

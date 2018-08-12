@@ -48,6 +48,7 @@ Or if you checkout the github repo like this,
 use strictures 2;
 use Cpanel::JSON::XS;
 use Dancer2;
+use Dancer2::Plugin::CSRF;
 use File::ShareDir 'dist_dir';
 use Path::Tiny;
 use Template;
@@ -68,6 +69,7 @@ get '/' => sub {
     my $vars_file = $example_dir->child('index.vars');
     template 'index',
       {
+        csrf_token  => get_csrf_token(),
         engine_list => engine_list_for_ui( selected => ['tt2'] ),
         examples    => load_examples(),
         tt          => $template->slurp_utf8,
@@ -77,7 +79,7 @@ get '/' => sub {
 
 sub load_examples {
     my @examples;
-    my @files     = $example_dir->children(qr/\.settings/);
+    my @files = $example_dir->children(qr/\.settings/);
     for my $file (@files) {
         my ( $name, $settings ) = load_settings($file);
         unless ( $name eq 'index' ) {
@@ -97,6 +99,11 @@ sub engine_list_for_ui {
 }
 
 post '/tt2' => sub {
+    my $csrf_token = param('csrf_token');
+    if ( !$csrf_token || !validate_csrf_token($csrf_token) ) {
+        return status 403;
+    }
+
     my $tt = body_parameters->{template};
     my $vars;
     my @engines = query_parameters->get_all('engine');
@@ -144,6 +151,7 @@ get '/example/:name' => sub {
     }
     my $selected = ['tt2'];
     my $tt_vars  = {
+        csrf_token  => get_csrf_token(),
         examples  => load_examples(),
         tt        => $template->slurp_utf8,
         variables => $vars_file->slurp_utf8,

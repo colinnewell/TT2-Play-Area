@@ -4,8 +4,13 @@ layout: "main"
 
 charset: "UTF-8"
 
+session: Cookie
 template: "alloy"
 engines:
   template:
     AUTO_FILTER: html
-
+  session:
+    Cookie:
+      secret_key:           9c33687b80726c83c8c7dc18505a550f1c108a3132d3a6df490623f5abd44716
+      default_duration:     604800
+      with_request_address: 0

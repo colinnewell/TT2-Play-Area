@@ -1,5 +1,5 @@
 [% title = 'TT2 Play Area' %]
-<h1>TT2 Play Area</h1>
+<h1><a href="/">TT2 Play Area</a></h1>
 
 <p>[% IF example_data.blurb %][% example_data.blurb %][% ELSE %]Welcome to the Template::Toolkit play area[% END %]</p>
 [% IF examples %]

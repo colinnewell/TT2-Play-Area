@@ -41,5 +41,5 @@ it to be valid JSON as well as valid javascript.
 </p>
 
 <pre>
-console.log(malicious.json.replace('<','\u003c'));
+console.log([% malicious.json.replace('<','\u003c') %]);
 </pre>

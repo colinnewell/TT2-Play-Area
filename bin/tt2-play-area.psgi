@@ -8,12 +8,15 @@ use warnings;
 use Plack::Builder;
 use TT2::Play::Area;
 
-open my $rand, '<', '/dev/urandom' or die 'Failed to open /dev/urandom';
-my $bytes = '0' x 32;
-die "Failed to read sufficient from random - $!"
-  unless sysread( $rand, $bytes, 32 ) == 32;
-close $rand;
-my $secret_key = unpack 'H*', $bytes;
+my $secret_key = $ENV{TT2_PLAYAREA_SECRET};
+unless ($secret_key) {
+    open my $rand, '<', '/dev/urandom' or die 'Failed to open /dev/urandom';
+    my $bytes = '0' x 32;
+    die "Failed to read sufficient from random - $!"
+      unless sysread( $rand, $bytes, 32 ) == 32;
+    close $rand;
+    $secret_key = unpack 'H*', $bytes;
+}
 
 builder {
     enable 'Session::Cookie',

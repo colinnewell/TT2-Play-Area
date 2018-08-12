@@ -14,8 +14,8 @@
           </div>
         </div>
     </div>
-    <a class="tt2" href="#">Run</a>
-    <a class="view" href="#">View</a>
+    <a class="tt2" href="#" title="Process the template and see the source it generates">Run</a>
+    <a class="view" href="#" title="Load the html produced by processing the template (may fire XSS)">View</a>
     <form id="engines" method="post">
     [% FOR engine IN engine_list.keys.sort %]
         <label>[% engine_list.$engine.name %]<input type="checkbox" name="engine" value="[% engine %]" [% IF engine_list.$engine.selected %]checked[% END %]></label>

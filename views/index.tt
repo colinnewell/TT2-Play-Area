@@ -14,7 +14,7 @@
           </div>
         </div>
     </div>
-    <a class="tt2" href="#" title="Process the template and see the source it generates">Run</a>
+    <a class="tt2" href="#" title="Process the template and see the source it generates"><span class="hotkey">R</span>un</a>
     <a class="view" href="#" title="Load the html produced by processing the template (may fire XSS)">View</a>
     <form id="engines" method="post">
     [% FOR engine IN engine_list.keys.sort %]
@@ -26,11 +26,11 @@
 <p>[% IF example_data.blurb %][% example_data.blurb %][% ELSE %]Welcome to the Template::Toolkit play area[% END %]</p>
 <div class="core">
     <div class="tt">
-        <h2>Template</h2>
+        <h2><span class="hotkey">T</span>emplate</h2>
         <textarea id="editor">[% tt | html %]</textarea>
     </div>
     <div class="variables">
-        <h2>Variables</h2>
+        <h2><span class="hotkey">V</span>ariables</h2>
         <textarea id="variables">[% variables | html %]</textarea>
     </div>
     <div class="results">

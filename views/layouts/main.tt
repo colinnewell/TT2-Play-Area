@@ -33,7 +33,7 @@
                 matchBrackets: true,
                 mode: "application/json",
             });
-            $('a.tt2').click(function() {
+            var run = function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
                     function(data) {
                         var $output_div = $('<div>');
@@ -43,7 +43,8 @@
                         $('#results').html($output_div);
                     }
                 );
-            });
+            };
+            $('a.tt2').click(run);
 
             $('a.view').click(function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
@@ -56,6 +57,17 @@
                     }
                 );
             });
+            document.onkeyup = function(event) {
+                if(event.altKey && !event.shiftKey && !event.ctlKey) {
+                    if(event.keyCode === 82) { // r
+                        run();
+                    } else if(event.keyCode === 84) { // t
+                        myCodeMirror.focus();
+                    } else if(event.keyCode === 86) { // v
+                        variablesEditor.focus();
+                    }
+                }
+            };
         });
     </script>
   </head>

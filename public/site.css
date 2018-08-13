@@ -3,6 +3,10 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
+.hotkey {
+    text-decoration: underline;
+}
+
 /* w3c example */
 /* Navbar container */
 .navbar {

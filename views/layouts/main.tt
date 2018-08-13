@@ -33,6 +33,7 @@
                 matchBrackets: true,
                 mode: "application/json",
             });
+
             var run = function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
                     function(data) {
@@ -45,6 +46,13 @@
                 );
             };
             $('a.tt2').click(run);
+
+            var clear = function() {
+                myCodeMirror.setValue('');
+                variablesEditor.setValue('');
+                myCodeMirror.focus();
+            };
+            $('a.clear').click(clear);
 
             $('a.view').click(function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
@@ -59,7 +67,9 @@
             });
             document.onkeyup = function(event) {
                 if(event.altKey && !event.shiftKey && !event.ctlKey) {
-                    if(event.keyCode === 82) { // r
+                    if(event.keyCode === 67) { // c
+                        clear();
+                    } else if(event.keyCode === 82) { // r
                         run();
                     } else if(event.keyCode === 84) { // t
                         myCodeMirror.focus();

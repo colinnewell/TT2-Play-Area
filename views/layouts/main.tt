@@ -57,8 +57,9 @@
 
             var clear = function() {
                 myCodeMirror.setValue('');
-                variablesEditor.setValue('');
+                variablesEditor.setValue('{}');
                 myCodeMirror.focus();
+                $('#results').html($('<div>'));
             };
             $('a.clear').click(clear);
 

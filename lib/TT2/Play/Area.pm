@@ -48,14 +48,17 @@ Or if you checkout the github repo like this,
 use strictures 2;
 use Cpanel::JSON::XS;
 use Dancer2;
-use File::ShareDir 'dist_dir';
+use File::ShareDir 'module_dir';
 use Path::Tiny;
 use Template;
 use Template::Alloy;
 
 our $VERSION = '0.001';
 
-my $example_dir = path( dist_dir('TT2-Play-Area') )->child('examples');
+my $example_dir = path( module_dir('TT2::Play::Area') )->child('examples');
+set public_dir =>
+  path( module_dir('TT2::Play::Area') )->child('public')->stringify;
+set views => path( module_dir('TT2::Play::Area') )->child('views')->stringify;
 
 my %engines = (
     tt2        => 'TT2',
@@ -77,7 +80,7 @@ get '/' => sub {
 
 sub load_examples {
     my @examples;
-    my @files     = $example_dir->children(qr/\.settings/);
+    my @files = $example_dir->children(qr/\.settings/);
     for my $file (@files) {
         my ( $name, $settings ) = load_settings($file);
         unless ( $name eq 'index' ) {

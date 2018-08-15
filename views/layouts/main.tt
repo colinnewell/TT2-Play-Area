@@ -20,6 +20,7 @@
     <script src="/codemirror/addon/edit/matchbrackets.js"></script>
     <script src="/codemirror/addon/edit/matchtags.js"></script>
     <script>
+        "use strict";
         $(function() {
             var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('editor'),
             {
@@ -34,15 +35,22 @@
                 mode: "application/json",
             });
 
+            var display_results = function(method) {
+                return function(data) {
+                    var $output_div = $('<div>');
+                    var result_output = [];
+                    $.each(data.result, function(key, value) {
+                        result_output.push([$('<h2>').text(key), method($('<pre>'), value)]);
+                    });
+                    result_output.sort(function(a, b) { return a[0].text().localeCompare(b[0].text()) });
+                    $output_div.append(...result_output);
+                    $('#results').html($output_div);
+                };
+            };
+
             var run = function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
-                    function(data) {
-                        var $output_div = $('<div>');
-                        $.each(data.result, function(key, value) {
-                            $output_div.append($('<h2>').text(key), $('<pre>').text(value));
-                        });
-                        $('#results').html($output_div);
-                    }
+                    display_results(function($element, value) { return $element.text(value) })
                 );
             };
             $('a.tt2').click(run);
@@ -56,13 +64,7 @@
 
             $('a.view').click(function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
-                    function(data) {
-                        var $output_div = $('<div>');
-                        $.each(data.result, function(key, value) {
-                            $output_div.append($('<h2>').text(key), $('<div>').html(value));
-                        });
-                        $('#results').html($output_div);
-                    }
+                    display_results(function($element, value) { return $element.html(value) })
                 );
             });
             document.onkeyup = function(event) {

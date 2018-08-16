@@ -57,7 +57,7 @@ use Path::Tiny;
 use Template;
 use Template::Alloy;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 my $example_dir = path( module_dir('TT2::Play::Area') )->child('examples');
 

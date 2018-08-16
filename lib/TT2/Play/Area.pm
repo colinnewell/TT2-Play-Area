@@ -56,8 +56,14 @@ use Template::Alloy;
 our $VERSION = '0.001';
 
 my $example_dir = path( module_dir('TT2::Play::Area') )->child('examples');
+
+set appname => 'TT2::Play::Area';
+set charset => 'UTF-8';
+set engines => { template => { AUTO_FILTER => 'html' } };
+set layout  => 'main';
 set public_dir =>
   path( module_dir('TT2::Play::Area') )->child('public')->stringify;
+set template => 'alloy';
 set views => path( module_dir('TT2::Play::Area') )->child('views')->stringify;
 
 my %engines = (

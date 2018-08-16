@@ -47,11 +47,14 @@
                     $('#results').html($output_div);
                 };
             };
+            var communication_failure = function(err) {
+                $('#results').text('Failed to talk to the server');
+            };
 
             var run = function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
                     display_results(function($element, value) { return $element.text(value) })
-                );
+                ).fail(communication_failure);
             };
             $('a.tt2').click(run);
 
@@ -66,7 +69,7 @@
             $('a.view').click(function() {
                 $.post('/tt2?' + $('#engines').serialize(), { template: myCodeMirror.getValue(), vars: variablesEditor.getValue() },
                     display_results(function($element, value) { return $element.html(value) })
-                );
+                ).fail(communication_failure);
             });
             document.onkeyup = function(event) {
                 if(event.altKey && !event.shiftKey && !event.ctlKey) {

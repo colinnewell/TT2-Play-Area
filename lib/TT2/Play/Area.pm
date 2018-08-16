@@ -38,6 +38,10 @@ using plackup like this,
 
     plackup `which tt2-play-area.psgi`
 
+Note that if you run with starman you need to use the C<--preload-app>
+option otherwise you will get 403 errors when trying to process the
+templates because the CSRF prevention mechanism gets in the way.
+
 Or if you checkout the github repo like this,
 
     cpanm --installdeps .

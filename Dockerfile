@@ -1,4 +1,4 @@
-FROM perl:5.26
+FROM perl:5.28
 
 COPY cpanfile /opt/play-area/cpanfile
 WORKDIR /opt/play-area

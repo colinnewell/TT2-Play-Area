@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: tt2
+  name: tt2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: tt2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: tt2
+    spec:
+      containers:
+      - env:
+          - name: TT2_PLAYAREA_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: tt2-playarea
+                key: secret
+        image: quay.io/colinnewell/tt2-play-area:v0.002
+        name: tt2
+        resources: {}
+status: {}

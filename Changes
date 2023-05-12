@@ -2,6 +2,8 @@ Changes for TT2-Play-Area
 
 {{ $NEXT }}
 
+  - Bump jquery version
+
 0.002     2018-08-26 17:17:10+01:00 Europe/London
 
   - Hopefully improved clarity of the text in some of the examples.
